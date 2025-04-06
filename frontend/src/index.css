@@ -1,0 +1,16 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.input-field {
+  @apply w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.error-text {
+  @apply text-red-500 text-xs mt-1;
+}
+
+.btn {
+  @apply w-full px-4 py-2 text-white bg-blue-600 rounded-md transition duration-200 hover:bg-blue-700;
+}
+
