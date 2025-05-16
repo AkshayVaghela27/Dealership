@@ -25,7 +25,7 @@ router.get("/:id", getBrandById);
 router.get("/:id/dealership-requests", authBrand, getDealershipRequests);
 
 // ✅ Handle Dealership Request (Approve/Reject) (Protected)
-router.patch("/request/verify-docs", verifyDocs);
+router.put("/request/verify-docs", verifyDocs);
 
 router.post("/handle-dealership-request", authBrand, handleDealershipRequest);
 

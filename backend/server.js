@@ -16,16 +16,17 @@ const Stock = require("./Routes/Stock")
 const Cars =require("./Routes/CarRoutes")
 const TestDrive = require("./Routes/TestDrive")
 const Slot = require("./Routes/Booking")
+const Report = require("./Routes/Report")
 const port = process.env.PORT
 connectdb()
 
 
 
 app.use(cors({
-  origin: "http://localhost:3000", // Only allow frontend origin
-  credentials: true, // Allow cookies & authentication headers
-})
-);
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"], // Make sure PATCH is included
+  credentials: true,
+}));
 app.use(express.json())
 app.use(cookieParser())
 
@@ -39,6 +40,7 @@ app.use("/api/stock",Stock)
 app.use("/api",Cars)
 // app.use("/api/test-drives",TestDrive)
 app.use("/api",Slot)
+app.use("/api",Report)
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

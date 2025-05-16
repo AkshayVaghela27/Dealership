@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FaCar, FaEnvelope, FaPhone, FaStore } from "react-icons/fa";
+import ReportAnalysis from "./ReportAnalysis";
 
 const BrandDashboard = () => {
   const { userId } = useParams();
@@ -10,6 +11,7 @@ const BrandDashboard = () => {
   const [carModels, setCarModels] = useState([]); // ✅ State for car models
   const [showForm, setShowForm] = useState(false);
   const [pendingStockRequests, setPendingStockRequests] = useState([]);
+  const [activeTab, setActiveTab] = useState("reports");
   const [newCar, setNewCar] = useState({
     name: "",
     price: "",
@@ -80,14 +82,11 @@ const BrandDashboard = () => {
   // ✅ Function to handle approval/rejection
   const handleVerifyDocs = async (requestId, aadharStatus, panStatus) => {
     try {
-      await axios.patch(
-        "http://localhost:6987/api/brands/request/verify-docs",
-        {
-          requestId,
-          aadharStatus,
-          panStatus,
-        }
-      );
+      await axios.put("http://localhost:6987/api/brands/request/verify-docs", {
+        requestId,
+        aadharStatus,
+        panStatus,
+      });
 
       // Update state to reflect the verification status
       setPendingRequests((prevRequests) =>
@@ -218,9 +217,37 @@ const BrandDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Navbar */}
-      <nav className="bg-white shadow-md py-4 px-8 flex items-center">
+      <nav className="bg-white shadow-md py-4 px-8 flex items-center justify-between">
         <img src={brand.logo} alt={brand.name} className="w-28 h-auto" />
+
+        <button
+          className={`px-4 py-2 text-lg ${
+            activeTab === "reports" ? "bg-blue-500 text-white" : "bg-gray-300"
+          }`}
+          onClick={() =>
+            setActiveTab((prev) => (prev === "reports" ? null : "reports"))
+          }
+        >
+          Reports
+        </button>
       </nav>
+
+      {/* Overlay Report */}
+      {activeTab === "reports" && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white w-[90%] max-w-5xl max-h-[90vh] overflow-y-auto rounded-lg shadow-lg p-6 relative">
+            {/* Close button */}
+            <button
+              className="absolute top-3 right-3 text-gray-600 hover:text-black text-xl font-bold"
+              onClick={() => setActiveTab(null)}
+            >
+              &times;
+            </button>
+
+            <ReportAnalysis brandId={userId} />
+          </div>
+        </div>
+      )}
 
       <div className="max-w-6xl mx-auto p-8">
         {/* Brand Overview Card */}

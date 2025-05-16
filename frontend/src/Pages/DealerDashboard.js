@@ -140,7 +140,7 @@ const DealerDashboard = () => {
 
   const handleVerifyDocs = async (requestId, aadharStatus, panStatus) => {
     try {
-      await axios.patch(
+      await axios.put(
         "http://localhost:6987/api/dealers/request/verify-docs",
         {
           requestId,

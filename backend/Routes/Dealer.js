@@ -31,7 +31,7 @@ router.get("/:id",getDealerById)
 
 router.get("/:id/outlet-requests",authDealer,getOutletRequest)
 
-router.patch("/request/verify-docs", verifyDocs);
+router.put("/request/verify-docs", verifyDocs);
 
 router.post("/handle-outlet-request",authDealer,handleOutletRequest)
 
